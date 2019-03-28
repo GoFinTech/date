@@ -1,0 +1,14 @@
+{
+  "name": "gofintech/date",
+  "description": "Very simple but still correctly working date object for PHP",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "GoFinTech\\Date\\": "src/"
+    }
+  }
+}
