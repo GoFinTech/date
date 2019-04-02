@@ -79,4 +79,44 @@ class DateTest extends TestCase
         $date = new Date(2019, 8, 14);
         $this->assertEquals($date, Date::create($date));
     }
+
+    public function testImmutable()
+    {
+        $date = new Date(2019, 10, 20);
+        $date->add(2, 'days');
+        $date->add(2, 'months');
+        $date->add(2, 'years');
+        $this->assertEquals('2019-10-20', $date);
+    }
+
+    public function testAdd() {
+        $date = new Date(2019, 1, 30);
+
+        $this->assertEquals('2019-01-31', $date->add(1, 'days'));
+        $this->assertEquals('2019-02-01', $date->add(2, 'days'));
+        $this->assertEquals('2018-12-31', $date->add(-30, 'days'));
+
+        $this->assertEquals('2019-02-28', $date->add(1, 'months'));
+        $this->assertEquals('2018-12-30', $date->add(-1, 'months'));
+        $this->assertEquals('2018-11-30', $date->add(-2, 'months'));
+
+        $this->assertEquals('2019-12-30', $date->add(11, 'months'));
+        $this->assertEquals('2020-01-30', $date->add(12, 'months'));
+        $this->assertEquals('2020-02-29', $date->add(13, 'months'));
+        $this->assertEquals('2020-12-30', $date->add(23, 'months'));
+        $this->assertEquals('2021-01-30', $date->add(24, 'months'));
+        $this->assertEquals('2021-02-28', $date->add(25, 'months'));
+        $this->assertEquals('2018-01-30', $date->add(-12, 'months'));
+        $this->assertEquals('2017-12-30', $date->add(-13, 'months'));
+        $this->assertEquals('2017-11-30', $date->add(-14, 'months'));
+        $this->assertEquals('2017-02-28', $date->add(-23, 'months'));
+        $this->assertEquals('2017-01-30', $date->add(-24, 'months'));
+        $this->assertEquals('2016-12-30', $date->add(-25, 'months'));
+        $this->assertEquals('2016-11-30', $date->add(-26, 'months'));
+
+        $this->assertEquals('2039-01-30', $date->add(20, 'years'));
+        $this->assertEquals('1999-01-30', $date->add(-20, 'years'));
+
+        $this->assertEquals('2019-02-28', Date::create('2020-02-29')->add(-1, 'years'));
+    }
 }

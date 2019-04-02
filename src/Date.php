@@ -237,7 +237,50 @@ class Date
      */
     public function add(int $count, string $what): Date
     {
-        // TODO
-        throw new \LogicException("Not implemented");
+        $year = $this->year;
+        $month = $this->month;
+        $day = $this->day;
+
+        switch ($what) {
+            case "years":
+            case "year":
+                $year += $count;
+                break;
+            case "months":
+            case "month":
+                $month += $count;
+                if ($month > 12) {
+                    $year += intdiv($month - 1, 12);
+                    $month = ($month - 1) % 12 + 1;
+                }
+                else if ($month < 1) {
+                    $year += intdiv($month - 1, 12) - 1;
+                    $month = ($month - 1) % 12 + 13;
+                    if ($month == 13) {
+                        $year++;
+                        $month = 1;
+                    }
+                }
+                break;
+            case "days":
+            case "day":
+                try {
+                    $date = new \DateTime((string)$this);
+                    $date->modify("$count days");
+                    $year = (int)$date->format('Y');
+                    $month = (int)$date->format('m');
+                    $day = (int)$date->format('d');
+                }
+                catch (\Exception $ex) {
+                    throw new \InvalidArgumentException("Date::add date manipulation error: {$ex->getMessage()}");
+                }
+                break;
+        }
+
+        $lastDay = static::lastDayOfMonth($year, $month);
+        if ($day > $lastDay)
+            $day = $lastDay;
+
+        return new Date($year, $month, $day);
     }
 }
