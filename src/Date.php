@@ -15,19 +15,15 @@ class Date
     public const MONTHS = 'months';
     public const DAYS = 'days';
 
-    /** @var int */
-    private $year;
-    /** @var int */
-    private $month;
-    /** @var int */
-    private $day;
+    /** @var string YYYY-MM-DD */
+    private $date;
 
     /**
      * @return int year value of this date
      */
     public function year(): int
     {
-        return $this->year;
+        return (int)substr($this->date, 0, 4);
     }
 
     /**
@@ -35,7 +31,7 @@ class Date
      */
     public function month(): int
     {
-        return $this->month;
+        return (int)substr($this->date, 5, 2);
     }
 
     /**
@@ -43,7 +39,7 @@ class Date
      */
     public function day(): int
     {
-        return $this->day;
+        return (int)substr($this->date, 8, 2);
     }
 
     /**
@@ -67,9 +63,7 @@ class Date
         if ($day > static::lastDayOfMonth($year, $month))
             throw new \InvalidArgumentException("Date: day is not valid for the specified month");
 
-        $this->year = $year;
-        $this->month = $month;
-        $this->day = $day;
+        $this->date = sprintf('%d-%02d-%02d', $year, $month, $day);
     }
 
     /**
@@ -182,7 +176,7 @@ class Date
      */
     public function getLastDayOfMonth(): int
     {
-        return static::lastDayOfMonth($this->year, $this->month);
+        return static::lastDayOfMonth($this->year(), $this->month());
     }
 
     /**
@@ -212,7 +206,7 @@ class Date
      */
     public function getLeapYear(): bool
     {
-        return static::isLeapYear($this->year);
+        return static::isLeapYear($this->year());
     }
 
     /**
@@ -220,7 +214,7 @@ class Date
      */
     public function __toString()
     {
-        return sprintf('%d-%02d-%02d', $this->year, $this->month, $this->day);
+        return $this->date;
     }
 
     /**
@@ -237,9 +231,9 @@ class Date
      */
     public function add(int $count, string $what): Date
     {
-        $year = $this->year;
-        $month = $this->month;
-        $day = $this->day;
+        $year = $this->year();
+        $month = $this->month();
+        $day = $this->day();
 
         switch ($what) {
             case "years":
