@@ -277,4 +277,15 @@ class Date
 
         return new Date($year, $month, $day);
     }
+
+    /**
+     * Formats this date using custom formatting.
+     * @param string $format format supported by DateTime
+     * @return string formatted value
+     * @see \DateTime::format()
+     */
+    public function format(string $format): string
+    {
+        return (new \DateTime($this->date))->format($format);
+    }
 }

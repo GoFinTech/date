@@ -119,4 +119,10 @@ class DateTest extends TestCase
 
         $this->assertEquals('2019-02-28', Date::create('2020-02-29')->add(-1, 'years'));
     }
+
+    public function testFormat() {
+        $date = new Date(2019, 1, 2);
+
+        $this->assertEquals('02.2019/01', $date->format('d.Y/m'));
+    }
 }
