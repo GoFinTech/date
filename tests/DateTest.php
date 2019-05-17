@@ -125,4 +125,9 @@ class DateTest extends TestCase
 
         $this->assertEquals('02.2019/01', $date->format('d.Y/m'));
     }
+
+    public function testJsonSerialize() {
+        $date = new Date(2019, 5, 17);
+        $this->assertEquals('"2019-05-17"', json_encode($date));
+    }
 }

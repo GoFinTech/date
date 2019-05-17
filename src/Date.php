@@ -4,12 +4,14 @@
 namespace GoFinTech\Date;
 
 
+use JsonSerializable;
+
 /**
  * An immutable object representing a Gregorian date: year, month and day of month.
  *
  * @package GoFinTech\Date
  */
-class Date
+class Date implements JsonSerializable
 {
     public const YEARS = 'years';
     public const MONTHS = 'months';
@@ -287,5 +289,10 @@ class Date
     public function format(string $format): string
     {
         return (new \DateTime($this->date))->format($format);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->date;
     }
 }
