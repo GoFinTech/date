@@ -130,4 +130,14 @@ class DateTest extends TestCase
         $date = new Date(2019, 5, 17);
         $this->assertEquals('"2019-05-17"', json_encode($date));
     }
+
+    public function testDiffInDays() {
+        $base = new Date(2004, 3, 1);
+
+        $this->assertEquals(0, $base->diffInDays(Date::create('2004-03-01')));
+        $this->assertEquals(1, $base->diffInDays(Date::create('2004-03-02')));
+        $this->assertEquals(365, $base->diffInDays(Date::create('2005-03-01')));
+        $this->assertEquals(-1, $base->diffInDays(Date::create('2004-02-29')));
+        $this->assertEquals(-2, $base->diffInDays(Date::create('2004-02-28')));
+    }
 }

@@ -281,6 +281,24 @@ class Date implements JsonSerializable
     }
 
     /**
+     * Returns difference in full days between this and
+     * some later date.
+     *
+     * @param Date $laterDate Date to compare against
+     * @return int negative if $laterDate turns out to be earlier than this
+     */
+    function diffInDays(Date $laterDate): int
+    {
+        $me = new \DateTime($this->date);
+        $later = new \DateTime($laterDate->date);
+        $diff = $me->diff($later);
+        if ($diff->invert)
+            return -$diff->days;
+        else
+            return $diff->days;
+    }
+
+    /**
      * Formats this date using custom formatting.
      * @param string $format format supported by DateTime
      * @return string formatted value
@@ -291,6 +309,10 @@ class Date implements JsonSerializable
         return (new \DateTime($this->date))->format($format);
     }
 
+    /**
+     * Implementation of JsonSerializable
+     * @return mixed|string
+     */
     public function jsonSerialize()
     {
         return $this->date;
