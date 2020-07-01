@@ -182,6 +182,26 @@ class Date implements JsonSerializable
     }
 
     /**
+     * Returns first day of this month.
+     * @return Date first day of this month
+     */
+    public function toFirstOfMonth(): Date
+    {
+        return new Date($this->year(), $this->month(), 1);
+    }
+
+    /**
+     * Returns last day of this month.
+     * @return Date last day of this month
+     */
+    public function toLastOfMonth(): Date
+    {
+        $year = $this->year();
+        $month = $this->month();
+        return new Date($year, $month, static::lastDayOfMonth($year, $month));
+    }
+
+    /**
      * Checks if specified year has a leap day.
      *
      * @param int $year

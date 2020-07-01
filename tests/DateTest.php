@@ -40,8 +40,10 @@ class DateTest extends TestCase
         $this->assertEquals(30, Date::lastDayOfMonth(2019, 9));
         $this->assertEquals(29, Date::lastDayOfMonth(2020, 2));
 
-        $date = new Date(2019, 3, 1);
+        $date = new Date(2019, 3, 2);
         $this->assertEquals(31, $date->getLastDayOfMonth());
+        $this->assertEquals("2019-03-31", $date->toLastOfMonth());
+        $this->assertEquals("2019-03-01", $date->toFirstOfMonth());
     }
 
     public function testIsLeapYear()
